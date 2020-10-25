@@ -1,0 +1,135 @@
+//
+//  DecoderAny.swift
+//  SwiftIORest_App
+//
+//  Created by Jan Anstipp on 13.10.20.
+//
+
+enum DecodingError:Error{
+    case keyNotFound(String)
+    case invadlideTye(String)
+    case invadlideKeyedContainer(String)
+    case invadlideUnkedContainer(String)
+    
+    case arrayIndexFail(String)
+    case valueTypinvalide(String)
+    case parsingFail(String)
+}
+
+public class JSONDecoderIO: Decoder {
+    public var codingPath: [CodingKey] = []
+    public var userInfo: [CodingUserInfoKey : Any] = [:]
+    let element: Any
+    
+    public init(_ string: String) throws {
+        do{
+            let parser = try JSONParser(text: string).parse()
+            element = JSONAny.decode(data: parser)!
+        }catch{
+            
+            throw DecodingError.parsingFail("parsingFail")
+        }
+    }
+    
+    init(_ element: Any, codingPath: [CodingKey] = []) {
+        self.element = element
+        self.codingPath.append(contentsOf: codingPath)
+    }
+    
+    public func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> {
+        guard let dic = element as? [String:Any] else {
+            throw DecodingError.invadlideKeyedContainer(codingPath.path())
+        }
+        return KeyedDecodingContainer(KDC(dic, codingPath))
+    }
+    
+    public func unkeyedContainer() throws -> UnkeyedDecodingContainer {
+        guard let array = element as? [Any] else {
+            throw DecodingError.invadlideUnkedContainer(codingPath.path())
+        }
+        return try UDC(array, codingPath)
+    }
+    
+    public func singleValueContainer() throws -> SingleValueDecodingContainer {
+        return SVDC(element, codingPath)
+    }
+}
+
+extension JSONDecoderIO{
+    
+    static func getDouble(_ object: Any) -> Double?{
+        if let double = object as? Double  {
+            return Double(double)
+        }
+        if let float = object as? Float {
+            return Double(float)
+        }
+        if let int = object as? Int {
+            return Double(int)
+        }
+        
+        if let string = object as? String,let double = Double(string)  {
+            return double
+        }
+        return nil
+    }
+    
+    
+    static func getFloat(_ object: Any) -> Float?{
+        if let float = object as? Float {
+            return float
+        }
+        if let double = object as? Double  {
+            return Float(double)
+        }
+        if let int = object as? Int {
+            return Float(int)
+        }
+        
+        if let string = object as? String,let float = Float(string)  {
+            return float
+        }
+        return nil
+    }
+    
+    
+}
+
+
+extension Array where Element == CodingKey {
+    func path() -> String {
+        self.map{$0.stringValue}.joined(separator: ".")
+    }
+    
+    func appending(key:CodingKey) -> [CodingKey] {
+        var keys = map{$0}
+        keys.append(key)
+        return keys
+    }
+}
+
+extension Array where Element == String {
+    func path() -> String {
+        self.map{$0}.joined(separator: ".")
+    }
+    
+    func appending(key:CodingKey) -> [String] {
+        var keys = map{$0}
+        keys.append(key.stringValue)
+        return keys
+    }
+    
+    func appending(key:String) -> [String] {
+        var keys = map{$0}
+        keys.append(key)
+        return keys
+    }
+    
+    func appending(count:Int) -> [String] {
+        var keys = map{$0}
+        keys.append(String(count))
+        return keys
+    }
+}
+
+
