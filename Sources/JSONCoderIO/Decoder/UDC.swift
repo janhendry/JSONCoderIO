@@ -10,7 +10,7 @@ extension JSONDecoderIO{
         
         let isDebug = false
         
-        var codingPath: [CodingKey] = []
+        var codingPath: [CodingKey]
         var count: Int?
         var isAtEnd: Bool = false
         var currentIndex: Int = 0
@@ -19,7 +19,7 @@ extension JSONDecoderIO{
         
         init(_ element: [Any],_ codingPath: [CodingKey] ) throws {
             self.element = element
-            self.codingPath.append(contentsOf: codingPath)
+            self.codingPath = codingPath
             count = self.element.count
             if count == 0 { isAtEnd = true }
         }

@@ -1,8 +1,5 @@
 {
-  "Null" : [
-    null,
-    null,
-    null,
-    null
-  ]
+  "Null" : {
+    "value" : null
+  }
 }

@@ -26,6 +26,8 @@ class JSONAny{
         case let object as JSONNumber :
             return object.numberValue
         default:
+//            return data.unbox().mapValues{ decode(data: $0) }
+            
             var d: [String:Any] = [:]
             var i = 0
             while i < data.values.count && i < data.keys.count {

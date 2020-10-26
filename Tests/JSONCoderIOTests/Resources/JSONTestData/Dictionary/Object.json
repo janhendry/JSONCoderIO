@@ -1,8 +1,14 @@
 {
-  "Object" : [
-    {},
-    {},
-    {},
-    {}
-  ]
+  "Object" : {
+    "ObjectElement" : {
+      "String" : "string value",
+      "Number" : 0,
+      "Boolean" : false,
+      "Null" : null,
+      "Array" : [
+        "1",
+        "2"
+      ]
+    }
+  }
 }

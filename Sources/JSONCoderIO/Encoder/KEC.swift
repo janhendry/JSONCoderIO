@@ -88,31 +88,45 @@ extension JSONEncoderIO{
         }
         
         mutating func encode<T>(_ value: T, forKey key: Key) throws where T : Encodable {
-            if let array = value as? [Any], array.isEmpty {
-                try addValue(value, key)
-                return
-            }
-            
             let mirror = Mirror(reflecting: value)
 //            print(mirror.displayStyle)
-            if mirror.children.count == 0 {
-                switch mirror.displayStyle {
-                    case .struct:
+            switch mirror.displayStyle {
+                case .struct, .class:
+                    if mirror.children.count == 0 {
                         try addValue([String:Any](),key)
-                        return
-                    case .enum:
+                    }else{
                         try data.addDic(codingPathS)
+                        try data.addLink(codingPathS, key.stringValue)
                         try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                        return
-                    default: break;
-//                        print("empty mirrir typ:\(mirror.displayStyle)")
-                }
+                    }
+                case .enum:
+                    try data.addDic(codingPathS)
+                    try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
+                // case .tuple:
+                //
+                // case .optional:
+                //
+                // case .set:
+                case .collection:
+                    if mirror.children.count == 0 {
+                        try addValue([Any](),key)
+                    }else{
+                        try data.addDic(codingPathS)
+                        try data.addLink(codingPathS, key.stringValue)
+                        try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
+                    }
+                case .dictionary:
+                    if mirror.children.count == 0 {
+                        try addValue([String:Any](),key)
+                    }else{
+                        try data.addDic(codingPathS)
+                        try data.addLink(codingPathS, key.stringValue)
+                        try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
+                    }
+                default:
+                    try data.addDic(codingPathS)
+                    try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
             }
-            
-            try data.addDic(codingPathS)
-            try data.addLink(codingPathS, key.stringValue)
-            
-            try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
         }
         
         mutating func encodeIfPresent(_ value: Bool?, forKey key: Key) throws{
@@ -170,11 +184,11 @@ extension JSONEncoderIO{
         mutating func encodeIfPresent(_ value: UInt64?, forKey key: Key) throws{
             try addValue(value, key)
         }
-       
+        
         mutating func encodeIfPresent<T>(_ value: T?, forKey key: Key) throws where T: Encodable{
             try addValue(value, key)
         }
-    
+        
     }
 }
 

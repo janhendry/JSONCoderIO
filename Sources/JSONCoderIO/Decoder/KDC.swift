@@ -7,15 +7,17 @@
 extension JSONDecoderIO{
     struct KDC<Key: CodingKey>: KeyedDecodingContainerProtocol {
         
+        
         let isDebug = false
         
-        var codingPath: [CodingKey] = []
-        var allKeys: [Key] = []
+        var codingPath: [CodingKey]
+        var allKeys: [Key]
         let element: [String: Any]
         
         init(_ element: [String: Any], _ codingPath: [CodingKey] ) {
             self.element = element
-            self.codingPath.append(contentsOf: codingPath)
+            self.codingPath = codingPath
+            allKeys = element.keys.compactMap { Key(stringValue: $0) }
         }
         
         private func decodeValue<T>(_ typ: T.Type,_ key: CodingKey) throws -> T{
@@ -67,13 +69,17 @@ extension JSONDecoderIO{
             if let float = JSONDecoderIO.getFloat(object){
                 return float
             }
-            throw DecodingError.invadlideTye(codingPath.path())
+            throw DecodingError.invadlideType(codingPath.path())
         }
         
         func decode<T>(_ type: T.Type, forKey key: Key) throws -> T where T : Decodable {
             
             guard let value = element[key.stringValue] else {
                 throw DecodingError.keyNotFound(codingPath.path())
+            }
+            
+            if let array = value as? [Any], array.isEmpty{
+                return value as! T
             }
 
             return try T(from: JSONDecoderIO(value,codingPath: codingPath.appending(key: key) ))

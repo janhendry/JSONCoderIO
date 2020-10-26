@@ -9,12 +9,12 @@ extension JSONDecoderIO{
         
         let isDebug = false
         
-        var codingPath: [CodingKey] = []
+        var codingPath: [CodingKey]
         let element: Any
         
         init(_ element: Any,_ codingPath: [CodingKey]) {
             self.element = element
-            self.codingPath.append(contentsOf: codingPath)
+            self.codingPath = codingPath
         }
         
         private func decodeValue<T>(_ typ: T.Type) throws -> T{

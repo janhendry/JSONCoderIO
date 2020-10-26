@@ -45,7 +45,7 @@ internal class JSONObject: CustomStringConvertible {
         }
     }
     func unbox() -> Dictionary<String, Any> {
-        var d = Dictionary<String,Any>()
+        var d = Dictionary<String,Any?>()
         var i = 0
         
         while i < self.values.count && i < self.keys.count {
@@ -71,14 +71,12 @@ internal class JSONObject: CustomStringConvertible {
                 let s = v as! JSONBool
                 d[k.unbox()] = s.unbox() as Bool
             case is JSONNull:
-                d[k.unbox()] = nil
+                d.updateValue(nil,forKey: k.unbox())
             default:
-                d[k.unbox()] = v!.unbox() as Dictionary<String,Any>
+                d[k.unbox()] = v!.unbox() as Dictionary<String,Any?>
             }
-            
             i += 1
         }
-        
         return d
     }
 }
@@ -114,7 +112,7 @@ internal class JSONArray: JSONObject {
     }
     
     func unbox() -> [Any] {
-        var a = [Any]()
+        var a = [Any?]()
         for x in self.elements {
             switch (x.self) {
             case is JSONString:
@@ -136,7 +134,7 @@ internal class JSONArray: JSONObject {
                 let s = x as! JSONBool
                 a.append(s.unbox() as Bool)
             case is JSONNull:
-                continue
+                a.append(nil)
             default:
                 a.append(x.unbox())
             }

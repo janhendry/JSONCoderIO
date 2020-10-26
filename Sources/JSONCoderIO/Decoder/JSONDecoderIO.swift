@@ -24,7 +24,7 @@ public class JSONDecoderIO: Decoder {
     public init(_ string: String) throws {
         do{
             let parser = try JSONParser(text: string).parse()
-            element = JSONAny.decode(data: parser)!
+            element = parser.unbox()  //JSONAny.decode(data: parser)!
         }catch{
             
             throw DecodingError.parsingFail("parsingFail")
