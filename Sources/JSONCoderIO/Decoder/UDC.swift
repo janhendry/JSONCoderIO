@@ -34,9 +34,13 @@ extension JSONDecoderIO{
                 isAtEnd = true
             }
             guard let value = object as? T else {
-                throw DecodingError.invadlideTye(codingPath.path())
+                throw DecodingError.invadlideType(codingPath.path())
             }
             return value
+        }
+        
+        func decodeDic<K>(_ dic: Dictionary<String,K>) -> Dictionary<String,K> where K : Decodable{
+            return [:]
         }
         
         mutating func decode(_ type: Bool.Type) throws -> Bool {
@@ -63,7 +67,7 @@ extension JSONDecoderIO{
             if let double = JSONDecoderIO.getDouble(object){
                 return double
             }
-            throw DecodingError.invadlideTye(codingPath.path())
+            throw DecodingError.invadlideType(codingPath.path())
         }
         
         mutating func decode(_ type: Float.Type) throws -> Float {
@@ -78,7 +82,7 @@ extension JSONDecoderIO{
             if let float = JSONDecoderIO.getFloat(object){
                 return float
             }
-            throw DecodingError.invadlideTye(codingPath.path())
+            throw DecodingError.invadlideType(codingPath.path())
         }
         
         mutating func decode<T>(_ type: T.Type) throws -> T where T : Decodable {

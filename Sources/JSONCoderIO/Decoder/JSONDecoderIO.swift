@@ -7,7 +7,7 @@
 
 enum DecodingError:Error{
     case keyNotFound(String)
-    case invadlideTye(String)
+    case invadlideType(String)
     case invadlideKeyedContainer(String)
     case invadlideUnkedContainer(String)
     
@@ -37,6 +37,7 @@ public class JSONDecoderIO: Decoder {
     }
     
     public func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> {
+        
         guard let dic = element as? [String:Any] else {
             throw DecodingError.invadlideKeyedContainer(codingPath.path())
         }

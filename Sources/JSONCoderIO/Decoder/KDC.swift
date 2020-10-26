@@ -23,7 +23,7 @@ extension JSONDecoderIO{
                 throw DecodingError.keyNotFound(codingPath.appending(key: key).path())
             }
             guard let value = object as? T else {
-                throw DecodingError.keyNotFound(codingPath.appending(key: key).path())
+                throw DecodingError.invadlideType(codingPath.appending(key: key).path())
             }
             return value
         }
@@ -57,7 +57,7 @@ extension JSONDecoderIO{
             if let double = JSONDecoderIO.getDouble(object){
                 return double
             }
-            throw DecodingError.invadlideTye(codingPath.path())
+            throw DecodingError.invadlideType(codingPath.path())
         }
         
         func decode(_ type: Float.Type, forKey key: Key) throws -> Float {

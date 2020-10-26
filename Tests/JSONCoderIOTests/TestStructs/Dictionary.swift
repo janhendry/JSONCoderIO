@@ -2,38 +2,39 @@
 //  File.swift
 //  
 //
-//  Created by Jan Anstipp on 21.10.20.
+//  Created by Jan Anstipp on 25.10.20.
 //
 
-enum Arrays{
+
+enum Dictionarys{
     
-    struct Array_:Codable, BundelPath {
-        let array: [[Int]]
-        
-        enum CodingKeys: String, CodingKey {
-               case array = "Array"
-        }
-        
-        func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Array","json")
-        }
-    }
+//    struct Array_:Codable, BundelPath {
+//        let array: [[String:Int]]
+//
+//        enum CodingKeys: String, CodingKey {
+//            case array = "Array"
+//        }
+//
+//        func path() -> (subDic:String,file:String,ext:String) {
+//            return ("JSONTestData/Array","Array","json")
+//        }
+//    }
     
     struct Boolean_:Codable, BundelPath {
-        let boolean: [Bool]
+        let boolean: [String:Bool]
         
         enum CodingKeys: String, CodingKey {
             case boolean = "Boolean"
         }
         
         func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Boolean","json")
+            return ("JSONTestData/Dictionary","Boolean","json")
         }
     }
     
     struct Double_:Codable, BundelPath {
         let double: [Double]
-
+        
         enum CodingKeys: String, CodingKey {
             case double = "Double"
         }
@@ -104,7 +105,7 @@ enum Arrays{
             return ("JSONTestData/Array","Float","json")
         }
     }
-
+    
     struct Integer_: Codable, BundelPath {
         let integer: [Int]
         
@@ -117,9 +118,21 @@ enum Arrays{
         }
     }
     
+    struct IntegerArray_:Codable, BundelPath {
+        let array: [String:[Int]]
+        
+        enum CodingKeys: String, CodingKey {
+            case array = "Array"
+        }
+        
+        func path() -> (subDic:String,file:String,ext:String) {
+            return ("JSONTestData/Array","Array","json")
+        }
+    }
+    
     struct Null_: Codable, BundelPath {
         let null: [Int?]
-
+        
         enum CodingKeys: String, CodingKey {
             case null = "Null"
         }
@@ -131,7 +144,7 @@ enum Arrays{
     
     struct Object_: Codable, BundelPath {
         let object: [ObjectElement_]
-
+        
         enum CodingKeys: String, CodingKey {
             case object = "Object"
         }
@@ -140,11 +153,11 @@ enum Arrays{
             return ("JSONTestData/Array","Object","json")
         }
     }
-
+    
     // MARK: - Array
     struct ObjectElement_: Codable {
     }
-
+    
     
     
     struct String_: Codable, BundelPath {
@@ -158,10 +171,10 @@ enum Arrays{
             return ("JSONTestData/Array","String","json")
         }
     }
-
+    
     struct Object2_: Codable, BundelPath {
         let object2: [Object2Element_]
-
+        
         enum CodingKeys: String, CodingKey {
             case object2 = "Object2"
         }
@@ -171,15 +184,15 @@ enum Arrays{
         }
         
     }
-
+    
     // MARK: - Object2Element
     struct Object2Element_: Codable {
         let boolean: Bool
         let null: String?
         let string: String
         let number: Int
-   
-
+        
+        
         enum CodingKeys: String, CodingKey {
             case boolean = "Boolean"
             case null = "Null"
@@ -187,6 +200,7 @@ enum Arrays{
             case number = "Number"
         }
     }
-
+    
     
 }
+

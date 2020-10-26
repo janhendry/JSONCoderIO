@@ -13,7 +13,7 @@ protocol BundelPath {
 
 enum Basic {
     
-    struct Array:Codable, BundelPath {
+    struct Array_:Codable, BundelPath {
         let Array: [Int?]
         
         func path() -> (subDic:String,file:String,ext:String) {
@@ -21,7 +21,7 @@ enum Basic {
         }
     }
     
-    struct Boolean:Codable,BundelPath {
+    struct Boolean_:Codable,BundelPath {
         let Boolean: Bool
         
         func path() -> (subDic:String,file:String,ext:String) {
@@ -37,57 +37,32 @@ enum Basic {
         }
     }
     
-    struct Empty:Codable, BundelPath {
+    struct Empty_:Codable, BundelPath {
         func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Empty","json")
         }
     }
     
-    struct Float_:Codable, BundelPath {
-        let Float: Float
+    struct EnumInt_: Codable, BundelPath{
+        var language: Language
         
-        func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","Float","json")
+        enum Language: Int, Codable {
+            case german = 0
+            case english = 1
+            case spanish = 2
+            case french = 3
         }
-    }
-    struct Integer:Codable, BundelPath {
-        let Integer: Int
-        
-        func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","Integer","json")
-        }
-    }
-    struct Null:Codable, BundelPath {
-        let Null: Int?
-        
-        func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","Null","json")
-        }
-    }
-    
-    
-    
-    struct Object:Codable, BundelPath {
-        let Object: Empty
-        
-        func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","Object","json")
-        }
-    }
-    
-    struct PurpleString: Codable, BundelPath{
-        let string: String
         
         enum CodingKeys: String, CodingKey {
-            case string = "String"
+            case language = "Language"
         }
         
         func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","String_","json")
+            return ("JSONTestData/basic","EnumInt","json")
         }
     }
     
-    struct EnumString: Codable, BundelPath{
+    struct EnumString_: Codable, BundelPath{
         var language: Language
         
         enum Language: String, Codable {
@@ -106,23 +81,49 @@ enum Basic {
         }
     }
     
-    struct EnumInt: Codable, BundelPath{
-        var language: Language
+    struct Float_:Codable, BundelPath {
+        let Float: Float
         
-        enum Language: Int, Codable {
-            case german = 0
-            case english = 1
-            case spanish = 2
-            case french = 3
+        func path() -> (subDic:String,file:String,ext:String) {
+            return ("JSONTestData/basic","Float","json")
         }
+    }
+    struct Integer_:Codable, BundelPath {
+        let Integer: Int
+        
+        func path() -> (subDic:String,file:String,ext:String) {
+            return ("JSONTestData/basic","Integer","json")
+        }
+    }
+    struct Null_:Codable, BundelPath {
+        let Null: Int?
+        
+        func path() -> (subDic:String,file:String,ext:String) {
+            return ("JSONTestData/basic","Null","json")
+        }
+    }
+    
+    
+    
+    struct Object_:Codable, BundelPath {
+        let Object: Empty_
+        
+        func path() -> (subDic:String,file:String,ext:String) {
+            return ("JSONTestData/basic","Object","json")
+        }
+    }
+    
+    struct String_: Codable, BundelPath{
+        let string: String
         
         enum CodingKeys: String, CodingKey {
-            case language = "Language"
+            case string = "String"
         }
         
         func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","EnumInt","json")
+            return ("JSONTestData/basic","String_","json")
         }
     }
+
 }
 
