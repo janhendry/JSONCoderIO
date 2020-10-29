@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol BundelPath {
+protocol BundelPath: Equatable {
     func path() -> (subDic:String,file:String,ext:String)
 }
 

@@ -1,13 +1,21 @@
 //
 //  JSONEncoderIO.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 18.10.20.
 //
 
+enum Sort{
+    case keys
+    case alpha
+}
+
 public class JSONEncoderIO: Encoder{
+
+    
     public var codingPath: [CodingKey] = []
     var codingPathS: [String] = []
+    
+    var sort: Sort = .alpha
     
     var data: EncoderData
     public var userInfo: [CodingUserInfoKey : Any] = [:]

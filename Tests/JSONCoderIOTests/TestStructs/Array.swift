@@ -130,6 +130,7 @@ enum Arrays{
     }
     
     struct Object_: Codable, BundelPath {
+   
         let object: [ObjectElement_]
 
         enum CodingKeys: String, CodingKey {
@@ -142,7 +143,7 @@ enum Arrays{
     }
 
     // MARK: - Array
-    struct ObjectElement_: Codable {
+    struct ObjectElement_: Codable, Equatable {
     }
 
     
@@ -160,6 +161,7 @@ enum Arrays{
     }
 
     struct Object2_: Codable, BundelPath {
+        
         let object2: [Object2Element_]
 
         enum CodingKeys: String, CodingKey {
@@ -173,18 +175,20 @@ enum Arrays{
     }
 
     // MARK: - Object2Element
-    struct Object2Element_: Codable {
+    struct Object2Element_: Codable,Equatable {
         let boolean: Bool
+        let number: Int
         let null: String?
         let string: String
-        let number: Int
+  
    
 
         enum CodingKeys: String, CodingKey {
             case boolean = "Boolean"
+            case number = "Number"
             case null = "Null"
             case string = "String"
-            case number = "Number"
+
         }
     }
 

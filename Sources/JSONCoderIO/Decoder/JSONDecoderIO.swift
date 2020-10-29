@@ -10,7 +10,6 @@ enum DecodingError:Error{
     case invadlideType(String)
     case invadlideKeyedContainer(String)
     case invadlideUnkedContainer(String)
-    
     case arrayIndexFail(String)
     case valueTypinvalide(String)
     case parsingFail(String)

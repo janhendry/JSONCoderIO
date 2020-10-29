@@ -16,7 +16,7 @@ An overview of what has been tested with this library. If you have found errors 
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`CollectionDifference`](doc://com.apple.documentation/documentation/swift/collectiondifference) | ?         | ?         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`CollectionDifference.Change`](doc://com.apple.documentation/documentation/swift/collectiondifference/change) | ?         | ?         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`ContiguousArray`](doc://com.apple.documentation/documentation/swift/contiguousarray) | ?         | ?         |
-| [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Dictionary`](doc://com.apple.documentation/documentation/swift/dictionary) | ?         | ?         |
+| [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Dictionary`](doc://com.apple.documentation/documentation/swift/dictionary) | true         | true         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Double`](doc://com.apple.documentation/documentation/swift/double) | true      | true      |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Float`](doc://com.apple.documentation/documentation/swift/float) | true      | true      |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Float16`](doc://com.apple.documentation/documentation/swift/float16) | ?         | ?         |
@@ -25,7 +25,7 @@ An overview of what has been tested with this library. If you have found errors 
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Int16`](doc://com.apple.documentation/documentation/swift/int16) | true      | true      |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Int32`](doc://com.apple.documentation/documentation/swift/int32) | true      | true      |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Int64`](doc://com.apple.documentation/documentation/swift/int64) | true      | true      |
-| [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Optional`](doc://com.apple.documentation/documentation/swift/optional) | ?         | ?         |
+| [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Optional`](doc://com.apple.documentation/documentation/swift/optional) | true         | true         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`PartialRangeThrough`](doc://com.apple.documentation/documentation/swift/partialrangethrough) | ?         | ?         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`PartialRangeUpTo`](doc://com.apple.documentation/documentation/swift/partialrangeupto) | ?         | ?         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Range`](doc://com.apple.documentation/documentation/swift/range) | ?         | ?         |

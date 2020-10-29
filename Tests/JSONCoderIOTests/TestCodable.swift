@@ -15,42 +15,45 @@ extension JSONCoderIOTests {
         guard let url = Bundle.module.url(forResource:typ.path().file, withExtension: typ.path().ext,subdirectory: typ.path().subDic)
         else { XCTFail("invalid resource Path: \(path)"); return }
         
-        guard let data = try? Data(contentsOf: url)
+        guard let fileData = try? Data(contentsOf: url)
         else{ XCTFail("invalide data: \(path)"); return }
         
-        //JSON Object from Data
-        let jsonObjectD =  try! JSONSerialization.jsonObject(with: data)
-        //Data without Escaping Slashes
-        let shortD =  try! JSONSerialization.data(withJSONObject: jsonObjectD, options: .withoutEscapingSlashes)
-        //String from data
-        let stringD = String(decoding: data, as: UTF8.self)
-        //String from Data without Escaping and Slashes
-        let stringShortD = String(decoding: shortD, as: UTF8.self)
+        let serialStringFromeFileData = String(decoding: fileData, as: UTF8.self)
         
-        //Decoder
-        let decoder: JSONDecoderIO
-        //Decode Object
-        let decodeT:T
-        //Encoder
-        let encoder = JSONEncoderIO()
-        //Data from Encoder
-        //let jsonObjectFromEncoder: EncoderData.DataDic
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
         
-        do { decoder = try JSONDecoderIO(stringD) }
-        catch{ XCTFail("Decoder Parsing fail: \(path)\n\(error)\n"); return }
+        let decoderIO: JSONDecoderIO
+        let encoderIO = JSONEncoderIO()
         
-        do { decodeT = try T(from: decoder) }
-        catch{ XCTFail("Decoder decoding fail: \(path)\n\(error)\n"); return }
+        let decodeObject: T, decodeObjectIO:T
+        let encodeData: Data
+        let encodeString: String, encodeStringIO: String
+
+        do { decodeObject = try JSONDecoder().decode(T.self, from: fileData) }
+        catch{ XCTFail("Decoder decode fail: \(path)\n\(error)\n"); return }
         
-        do { try decodeT.encode(to: encoder) }
+        do { decoderIO = try JSONDecoderIO(serialStringFromeFileData) }
+        catch{ XCTFail("DecoderIO Parsing fail: \(path)\n\(error)\n"); return }
+        
+        do { decodeObjectIO = try T(from: decoderIO) }
+        catch{ XCTFail("DecoderIO decoding fail: \(path)\n\(error)\n"); return }
+        
+        XCTAssertEqual(decodeObject, decodeObjectIO, "JSONDecoder != JSONDecoderIO")
+        
+        do { encodeData = try encoder.encode(decodeObjectIO) }
         catch{ XCTFail("Encoder encoding fail: \(path)\n\(error)\n"); return }
         
-        do { _ = try encoder.data.getJSON() }
-        catch{ XCTFail("Encoder parsing fail: \(path)\n\(error)"); return }
+        encodeString = String(decoding: encodeData, as: UTF8.self)
         
-        let stringT = try! encoder.getJson()
+        do { try decodeObjectIO.encode(to: encoderIO) }
+        catch{ XCTFail("EncoderIO encoding fail: \(path)\n\(error)\n"); return }
         
-        XCTAssertEqual(stringShortD,stringT, "Codable Fail: Input != Output: \(path)")
+        do { _ = try encoderIO.data.getJSON() }
+        catch{ XCTFail("EncoderIO parsing fail: \(path)\n\(error)"); return }
+        
+        encodeStringIO = try! encoderIO.getJson()
+        XCTAssertEqual(encodeString,encodeStringIO, "Encoder != EncoderIO : \(path)")
         
     }
 

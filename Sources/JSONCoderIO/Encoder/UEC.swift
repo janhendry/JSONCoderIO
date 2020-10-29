@@ -1,6 +1,5 @@
 //
 //  UVEC.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 18.10.20.
 //
@@ -97,8 +96,7 @@ extension JSONEncoderIO{
         
         mutating func encode<T>(_ value: T) throws where T : Encodable {
             let mirror = Mirror(reflecting: value)
-        
-//            print(mirror.displayStyle)
+            //print(mirror.displayStyle)
             switch mirror.displayStyle {
                 case .struct:
                     if mirror.children.count == 0{
@@ -107,7 +105,6 @@ extension JSONEncoderIO{
                         let path = codingPathS.appending(count: count)
                         try data.addArray(codingPathS)
                         try data.addLink(codingPathS,String(count))
-                        
                         count += 1
                         try value.encode(to: JSONEncoderIO(path, &data))
                        
@@ -122,16 +119,12 @@ extension JSONEncoderIO{
                         try value.encode(to: JSONEncoderIO(path, &data))
                     }
                 case .enum:
-//                    let path = codingPathS.appending(key:"\(count)")
-                    
                     try data.addArray(codingPathS)
-//                    try data.addLink(codingPathS, String(count))
                     count += 1
                     try value.encode(to: JSONEncoderIO(codingPathS, &data))
                 default:
                     try addValue(value)
             }
         }
-        
     }
 }

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  EncoderData.swift
 //  
 //
 //  Created by Jan Anstipp on 23.10.20.
@@ -9,6 +9,8 @@
 class EncoderData {
     
     private var data: [[String]:Any] = [:]
+    
+    var sort: Sort = .alpha
     
     func addArray(_ key:[String]) throws {
         if let _ = data[key] as? [Any] {
@@ -40,13 +42,13 @@ class EncoderData {
             data[dicKey] = dic
             return
         }
-    
+
         if var dic = data[dicKey] as? [Any] {
             dic.append(Link(path: dicKey, key: key))
             data[dicKey] = dic
             return
         }
-        
+
         throw EncoderStorageError.invalidLink(dicKey.joined(separator: ".") + key)
     }
     
@@ -111,6 +113,8 @@ class EncoderData {
         throw EncoderStorageError.firstObjectNoDictionary
     }
     
+    
+    
     private func decodeLink(_ value: Any) throws -> Any {
         switch value{
             case let object as DataDic:
@@ -138,16 +142,13 @@ class EncoderData {
     
     enum EncoderStorageError: Error{
         case firstObjectNoDictionary
-        
         case missingLink(String)
         case invalidLink(String)
-
         case invalidDic(String)
         case invalidArray(String)
         case invalidDicItem(String)
         case invalidArrayItem(String)
         case invalidItem(String)
-        
         case toJSONStringFail
     }
     
@@ -174,28 +175,72 @@ class EncoderData {
     func decodeAny(_ value: Any) ->String {
         switch value {
             case let dataDic as DataDic:
-                let values = dataDic.dic.map{ (key,value) -> String in
-                    "\"\(key)\":\( decodeAny(value))"
+                var dic = dataDic.dic
+                if sort == Sort.alpha{
+                    dic = dic.sorted{ $0.0 < $1.0 }
                 }
-                return "{\(values.joined(separator: ","))}"
-            case let dic as [String:Any]:
                 let values = dic.map{ (key,value) -> String in
                     "\"\(key)\":\( decodeAny(value))"
                 }
                 return "{\(values.joined(separator: ","))}"
+            case let dic as [String:Any]:
+                let values = dic.map{ ($0.0,$0.1) }
+                    .sorted{ $0.0 < $1.0 }
+                    .map{ (key,value) -> String in
+                        "\"\(key)\":\( decodeAny(value))"
+                    }
+                return "{\(values.joined(separator: ","))}"
             case let array as [Any] :
-                return "[\(array.map{  decodeAny($0) }.joined(separator: ","))]"
+                var value = array.map{  decodeAny($0) }
+                if sort == .alpha{
+                    value = value.sorted{ $0 < $1 }
+                }
+                return "[\(array.map{  decodeAny($0) } .joined(separator: ","))]"
             case let bool as Bool:
                 return bool ? "true" : "false"
             case _ as JSONNull:
                 return "null"
             case let string as String:
                 return "\"\(string)\""
+            case let optional as OptionalProtocol:
+                if optional.isSome() {
+                    let result = decodeAny(optional.unwrap())
+                    return result
+                }else{
+                    return  "Null"
+                }
             default:
                 return "\(value)"
         }
         
     }
+    
 
 }
 
+protocol OptionalProtocol {
+    func isSome() -> Bool
+    func unwrap() -> Any
+}
+
+extension Optional : OptionalProtocol {
+    func isSome() -> Bool {
+        switch self {
+        case .none: return false
+        case .some: return true
+        }
+    }
+
+    func unwrap() -> Any {
+        switch self {
+        case .none: preconditionFailure("trying to unwrap nil")
+        case .some(let unwrapped): return unwrapped
+        }
+    }
+    func unwrap<T>(type:T) -> T {
+        switch self {
+        case .none: preconditionFailure("trying to unwrap nil")
+        case .some(let unwrapped): return unwrapped as! T
+        }
+    }
+}

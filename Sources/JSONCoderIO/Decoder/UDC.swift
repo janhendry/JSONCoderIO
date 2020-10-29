@@ -1,6 +1,5 @@
 //
 //  UDC.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 14.10.20.
 //

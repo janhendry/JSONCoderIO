@@ -77,7 +77,7 @@ internal class JSONObject: CustomStringConvertible {
             }
             i += 1
         }
-        return d
+        return d as Dictionary<String, Any>
     }
 }
 
@@ -139,7 +139,7 @@ internal class JSONArray: JSONObject {
                 a.append(x.unbox())
             }
         }
-        return a
+        return a as [Any]
     }
 }
 

@@ -1,6 +1,5 @@
 //
 //  ContainerAny.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 13.10.20.
 //

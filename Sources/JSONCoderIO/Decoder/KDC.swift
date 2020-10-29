@@ -1,6 +1,5 @@
 //
 //  KDC.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 14.10.20.
 //
@@ -78,7 +77,7 @@ extension JSONDecoderIO{
                 throw DecodingError.keyNotFound(codingPath.path())
             }
             
-            if let array = value as? [Any], array.isEmpty{
+            if let array = value as? [T], array.isEmpty{
                 return value as! T
             }
 

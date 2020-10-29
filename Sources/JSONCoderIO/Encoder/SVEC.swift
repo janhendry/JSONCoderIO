@@ -1,6 +1,5 @@
 //
 //  SEC.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 18.10.20.
 //
