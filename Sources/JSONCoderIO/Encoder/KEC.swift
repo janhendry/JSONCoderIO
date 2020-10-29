@@ -10,21 +10,18 @@ extension JSONEncoderIO{
     struct KEC<Key: CodingKey>: KeyedEncodingContainerProtocol {
         
         let isDebug = false
-        var codingPath: [CodingKey] = []
-        var codingPathS: [String] = []
+        var codingPath: [CodingKey]
         
         var data: EncoderData
         
-        init(_ data: inout EncoderData,_ codingPath: [String]) {
+        init(_ data: inout EncoderData,_ codingPath: [CodingKey]) {
             self.data = data
-            self.codingPathS = codingPath
+            self.codingPath = codingPath
+            try! self.data.addDic(codingPath.path())
         }
         
-        private func addValue(_ value: Any?,_ key: Key) throws {
-            try data.addDic(codingPathS)
-            if let newValue = value {
-                try data.addDicItem(codingPathS, key: key.stringValue, value: newValue)
-            }
+        private func addValue(_ value: Any,_ key: Key) throws {
+            try data.addDicItem(codingPath.path(), key: key.stringValue, value: value)
         }
         
         mutating func encodeNil(forKey key: Key) throws {
@@ -88,124 +85,10 @@ extension JSONEncoderIO{
         }
         
         mutating func encode<T>(_ value: T, forKey key: Key) throws where T : Encodable {
-            let mirror = Mirror(reflecting: value)
-            let unwarppen: Mirror
-//            print(key.stringValue)
-//            print(mirror.displayStyle.debugDescription)
-            var style = mirror.displayStyle
-            
-            if style == .optional {
-                if mirror.children.count == 0 {
-                    // .None
-                } else {
-                    let (_, some) = mirror.children.first!
-                    print(some)
-                    unwarppen = Mirror(reflecting: some)
-                    style = unwarppen.displayStyle
-                }
-            }
-            
-            switch style {
-                case .struct, .class:
-                    if mirror.children.count == 0 {
-                        try addValue([String:Any](),key)
-                    }else{
-                        try data.addDic(codingPathS)
-                        try data.addLink(codingPathS, key.stringValue)
-                        try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                    }
-                case .enum:
-                    try data.addDic(codingPathS)
-                    try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                // case .tuple:
-                //
-                case .optional:
-                    try data.addDic(codingPathS)
-                    try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                case .collection: //,.set:
-                    if mirror.children.count == 0 {
-                        try addValue([Any](),key)
-                    }else{
-                        try data.addDic(codingPathS)
-                        try data.addLink(codingPathS, key.stringValue)
-                        try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                    }
-                case .dictionary:
-                    if mirror.children.count == 0 {
-                        try addValue([String:Any](),key)
-                    }else{
-                        try data.addDic(codingPathS)
-                        try data.addLink(codingPathS, key.stringValue)
-                        try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                    }
-                default:
-                    try data.addDic(codingPathS)
-                    try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-            }
+            try data.addLink(codingPath.path(), key.stringValue)
+            try value.encode(to: JSONEncoderIO(codingPath.appending(key: key), &data))
         }
         
-        mutating func encodeIfPresent(_ value: Bool?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: String?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Double?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Float?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Int?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Int8?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Int16?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Int32?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: Int64?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: UInt?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: UInt8?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: UInt16?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: UInt32?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-
-        mutating func encodeIfPresent(_ value: UInt64?, forKey key: Key) throws{
-            try addValue(value, key)
-        }
-        
-        mutating func encodeIfPresent<T>(_ value: T?, forKey key: Key) throws where T: Encodable{
-            try data.addDic(codingPathS)
-            if let newValue = value {
-                try encode(newValue, forKey: key)
-            }
-        }
         
     }
 }

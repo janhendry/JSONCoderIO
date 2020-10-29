@@ -16,7 +16,7 @@ extension JSONEncoderIO.KEC{
         if isDebug {
             fatalError()
         }else {
-            throw JSONEncoderIOError.notSupport("KEC: encodeConditional<\(T.self)>  key:\(codingPathS.appending(key: key).path())")
+            throw JSONEncoderIOError.notSupport("KEC: encodeConditional<\(T.self)>  key:\(codingPath.appending(key: key).path())")
         }
     }
 
@@ -24,7 +24,7 @@ extension JSONEncoderIO.KEC{
         if isDebug {
             fatalError()
         }else {
-            return KeyedEncodingContainer( JSONEncoderIO.KEC(&data, codingPathS.appending(key: key)))
+            return KeyedEncodingContainer( JSONEncoderIO.KEC(&data, codingPath.appending(key: key)))
         }
     }
 
@@ -32,7 +32,7 @@ extension JSONEncoderIO.KEC{
         if isDebug {
             fatalError()
         }else {
-            return JSONEncoderIO.UEC(&data, codingPathS.appending(key: key))
+            return JSONEncoderIO.UEC(&data, codingPath.appending(key: key))
         }
     }
 
@@ -189,7 +189,7 @@ extension JSONEncoderIO.UEC{
         if isDebug {
             fatalError()
         }else {
-            return KeyedEncodingContainer( JSONEncoderIO.KEC(&data, codingPathS))
+            return KeyedEncodingContainer( JSONEncoderIO.KEC(&data, codingPath))
         }
     }
     
@@ -197,7 +197,7 @@ extension JSONEncoderIO.UEC{
         if isDebug {
             fatalError()
         }else {
-            return JSONEncoderIO.UEC(&data, codingPathS)
+            return JSONEncoderIO.UEC(&data, codingPath)
         }
     }
     

@@ -3,6 +3,8 @@
 //
 //  Created by Jan Anstipp on 13.10.20.
 //
+import Foundation
+
 extension JSONDecoderIO{
     struct SVDC: SingleValueDecodingContainer {
         
@@ -33,6 +35,10 @@ extension JSONDecoderIO{
         
         func decode(_ type: Int.Type) throws -> Int {
             return try decodeValue(type)
+        }
+        
+        func decode(_ type: Float16.Type){
+            
         }
         
         func decode(_ type: Double.Type) throws -> Double {

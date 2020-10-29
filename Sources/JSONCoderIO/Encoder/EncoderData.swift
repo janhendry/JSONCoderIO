@@ -26,9 +26,6 @@ class EncoderData {
         if let _ = data[key] as? DataDic {
             return
         }
-        if let _ = data[key] as? [Any] {
-            return
-        }
         if data.keys.contains(key) {
             throw EncoderStorageError.invalidDic(key.joined(separator: "."))
         }
@@ -36,19 +33,16 @@ class EncoderData {
     }
     
     func addLink(_ dicKey:[String] ,_ key: String) throws {
-        
         if var dic = data[dicKey] as? DataDic {
             dic.add(key,Link(path: dicKey, key: key))
             data[dicKey] = dic
             return
         }
-
         if var dic = data[dicKey] as? [Any] {
             dic.append(Link(path: dicKey, key: key))
             data[dicKey] = dic
             return
         }
-
         throw EncoderStorageError.invalidLink(dicKey.joined(separator: ".") + key)
     }
     
@@ -70,14 +64,10 @@ class EncoderData {
     }
     
     func addItem(_ key:[String],_ value: Any) throws {
-        if nil != (try? addArrayItem(key, value)){
-            return
+        if data.keys.contains(key){
+            throw EncoderStorageError.invalidItem(key.joined(separator: "."))
         }
-        
-        if nil != (try? addDicItem(key.dropLast(), key: key.last!, value: value)){
-            return
-        }
-        throw EncoderStorageError.invalidItem(key.joined(separator: "."))
+        data.updateValue(value, forKey: key)
     }
     
     func print(){
@@ -244,3 +234,36 @@ extension Optional : OptionalProtocol {
         }
     }
 }
+
+
+//class EncoderData1 {
+//    
+//    struct JsonObject{
+//        var dic: [(String,Any)] = []
+//        
+//        mutating func add(_ key: [String] ,_ value:Any) -> Bool{
+//            dic.append((key,value))
+//        }
+//    }
+//    
+//        fileprivate mutating func merge(with other: JSON, typecheck: Bool) throws {
+//if type == other.type {
+//    switch type {
+//    case .dictionary:
+//        for (key, _) in other {
+//            try self[key].merge(with: other[key], typecheck: false)
+//        }
+//    case .array:
+//        self = JSON(arrayValue + other.arrayValue)
+//    default:
+//        self = other
+//    }
+//} else {
+//    if typecheck {
+//        throw SwiftyJSONError.wrongType
+//    } else {
+//        self = other
+//    }
+//}
+//}
+//}

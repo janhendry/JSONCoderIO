@@ -23,7 +23,7 @@ public class JSONDecoderIO: Decoder {
     public init(_ string: String) throws {
         do{
             let parser = try JSONParser(text: string).parse()
-            element = parser.unbox()  //JSONAny.decode(data: parser)!
+            element = parser.unbox()
         }catch{
             
             throw DecodingError.parsingFail("parsingFail")
@@ -100,7 +100,9 @@ extension Array where Element == CodingKey {
     func path() -> String {
         self.map{$0.stringValue}.joined(separator: ".")
     }
-    
+    func path() -> [String] {
+        self.map{$0.stringValue}
+    }
     func appending(key:CodingKey) -> [CodingKey] {
         var keys = map{$0}
         keys.append(key)
@@ -111,24 +113,6 @@ extension Array where Element == CodingKey {
 extension Array where Element == String {
     func path() -> String {
         self.map{$0}.joined(separator: ".")
-    }
-    
-    func appending(key:CodingKey) -> [String] {
-        var keys = map{$0}
-        keys.append(key.stringValue)
-        return keys
-    }
-    
-    func appending(key:String) -> [String] {
-        var keys = map{$0}
-        keys.append(key)
-        return keys
-    }
-    
-    func appending(count:Int) -> [String] {
-        var keys = map{$0}
-        keys.append(String(count))
-        return keys
     }
 }
 

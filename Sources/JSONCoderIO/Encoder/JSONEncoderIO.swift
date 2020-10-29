@@ -12,9 +12,7 @@ enum Sort{
 public class JSONEncoderIO: Encoder{
 
     
-    public var codingPath: [CodingKey] = []
-    var codingPathS: [String] = []
-    
+    public var codingPath: [CodingKey]
     var sort: Sort = .alpha
     
     var data: EncoderData
@@ -22,23 +20,24 @@ public class JSONEncoderIO: Encoder{
    
     public init() {
         self.data = .init()
+        codingPath = []
     }
     
-    init(_ codingPathx: [String] = [],_ data: inout EncoderData ) {
-        self.codingPathS = codingPathx
+    init(_ codingPath: [CodingKey] = [],_ data: inout EncoderData ) {
+        self.codingPath = codingPath
         self.data = data
     }
     
     public func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key : CodingKey {
-        return KeyedEncodingContainer(KEC(&data, codingPathS))
+        return KeyedEncodingContainer(KEC(&data, codingPath))
     }
     
     public func unkeyedContainer() -> UnkeyedEncodingContainer {
-        return UEC(&data, codingPathS)
+        return UEC(&data, codingPath)
     }
     
     public func singleValueContainer() -> SingleValueEncodingContainer {
-        return SVEC(&data, codingPathS)
+        return SVEC(&data, codingPath)
     }
     
     public func getJson() throws -> String {

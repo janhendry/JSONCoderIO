@@ -115,8 +115,7 @@ enum Basic {
     
     struct String_: Codable, BundelPath{
         let string: String
-        
-        enum CodingKeys: String, CodingKey {
+            enum CodingKeys: String, CodingKey {
             case string = "String"
         }
         
@@ -124,6 +123,7 @@ enum Basic {
             return ("JSONTestData/basic","String_","json")
         }
     }
+    
 
 }
 
