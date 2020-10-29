@@ -8,7 +8,7 @@
 import Foundation
 
 protocol BundelPath: Equatable {
-    func path() -> (subDic:String,file:String,ext:String)
+    static func path() -> (subDic:String,file:String,ext:String)
 }
 
 enum Basic {
@@ -16,7 +16,7 @@ enum Basic {
     struct Array_:Codable, BundelPath {
         let Array: [Int?]
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Array","json")
         }
     }
@@ -24,7 +24,7 @@ enum Basic {
     struct Boolean_:Codable,BundelPath {
         let Boolean: Bool
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Boolean","json")
         }
     }
@@ -32,13 +32,13 @@ enum Basic {
     struct Double_:Codable, BundelPath {
         let Double: Double
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Double","json")
         }
     }
     
     struct Empty_:Codable, BundelPath {
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Empty","json")
         }
     }
@@ -57,7 +57,7 @@ enum Basic {
             case language = "Language"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","EnumInt","json")
         }
     }
@@ -76,7 +76,7 @@ enum Basic {
             case language = "Language"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","EnumString","json")
         }
     }
@@ -84,21 +84,21 @@ enum Basic {
     struct Float_:Codable, BundelPath {
         let Float: Float
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Float","json")
         }
     }
     struct Integer_:Codable, BundelPath {
         let Integer: Int
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Integer","json")
         }
     }
     struct Null_:Codable, BundelPath {
         let Null: Int?
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Null","json")
         }
     }
@@ -108,7 +108,7 @@ enum Basic {
     struct Object_:Codable, BundelPath {
         let Object: Empty_
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Object","json")
         }
     }
@@ -120,7 +120,7 @@ enum Basic {
             case string = "String"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","String_","json")
         }
     }

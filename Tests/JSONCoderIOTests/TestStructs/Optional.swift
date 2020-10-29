@@ -32,7 +32,7 @@ enum Optionals{
             case string = "String"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Optional","OptionalNull","json")
         }
         
@@ -79,7 +79,7 @@ enum Optionals{
             case string = "String"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Optional","OptionalValue","json")
         }
         
@@ -123,7 +123,7 @@ enum Optionals{
         }
         
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Optional","DictionaryNull","json")
         }
     }
@@ -142,7 +142,7 @@ enum Optionals{
         }
         
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Optional","DictionaryValue","json")
         }
     }

@@ -14,7 +14,7 @@ enum Arrays{
                case array = "Array"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Array","json")
         }
     }
@@ -26,7 +26,7 @@ enum Arrays{
             case boolean = "Boolean"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Boolean","json")
         }
     }
@@ -38,7 +38,7 @@ enum Arrays{
             case double = "Double"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Double","json")
         }
     }
@@ -50,7 +50,7 @@ enum Arrays{
             case empty = "Empty"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Empty","json")
         }
     }
@@ -69,7 +69,7 @@ enum Arrays{
             case language = "Language"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","EnumInt","json")
         }
     }
@@ -88,7 +88,7 @@ enum Arrays{
             case language = "Language"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","EnumString","json")
         }
     }
@@ -100,7 +100,7 @@ enum Arrays{
             case float = "Float"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Float","json")
         }
     }
@@ -112,7 +112,7 @@ enum Arrays{
             case integer = "Integer"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Integer","json")
         }
     }
@@ -124,7 +124,7 @@ enum Arrays{
             case null = "Null"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Null","json")
         }
     }
@@ -137,7 +137,7 @@ enum Arrays{
             case object = "Object"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Object","json")
         }
     }
@@ -155,7 +155,7 @@ enum Arrays{
             case string = "String"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","String","json")
         }
     }
@@ -168,7 +168,7 @@ enum Arrays{
             case object2 = "Object2"
         }
         
-        func path() -> (subDic:String,file:String,ext:String) {
+        static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/Array","Object2","json")
         }
         
@@ -180,9 +180,7 @@ enum Arrays{
         let number: Int
         let null: String?
         let string: String
-  
-   
-
+        
         enum CodingKeys: String, CodingKey {
             case boolean = "Boolean"
             case number = "Number"
@@ -191,6 +189,4 @@ enum Arrays{
 
         }
     }
-
-    
 }

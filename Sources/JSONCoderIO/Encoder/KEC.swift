@@ -122,7 +122,7 @@ extension JSONEncoderIO{
                 case .optional:
                     try data.addDic(codingPathS)
                     try value.encode(to: JSONEncoderIO(codingPathS.appending(key: key), &data))
-                case .collection, .set:
+                case .collection: //,.set:
                     if mirror.children.count == 0 {
                         try addValue([Any](),key)
                     }else{
