@@ -61,9 +61,9 @@ internal class JSONObject: CustomStringConvertible {
             case is JSONDouble:
                 let s = v as! JSONDouble
                 d[k.unbox()] = s.unbox() as Double
-            case is JSONFloat:
-                let s = v as! JSONFloat
-                d[k.unbox()] = s.unbox() as Float
+//            case is JSONFloat:
+//                let s = v as! JSONFloat
+//                d[k.unbox()] = s.unbox() as Float
             case is JSONArray:
                 let s = v as! JSONArray
                 d[k.unbox()] = s.unbox() as [Any]
@@ -124,9 +124,9 @@ internal class JSONArray: JSONObject {
             case is JSONDouble:
                 let s = x as! JSONDouble
                 a.append(s.unbox() as Double)
-            case is JSONFloat:
-                let s = x as! JSONFloat
-                a.append(s.unbox() as Float)
+//            case is JSONFloat:
+//                let s = x as! JSONFloat
+//                a.append(s.unbox() as Float)
             case is JSONArray:
                 let s = x as! JSONArray
                 a.append(s.unbox() as [Any])
@@ -232,62 +232,68 @@ internal class JSONDouble: JSONObject {
         }
     }
 
-    init(value: String) {
-        self.numberValue = Double(value)!
-        super.init()
+    init?(value: String) {
+        if let double = Double(value){
+            self.numberValue = double
+            super.init()
+        }
+        return nil
     }
 
     func unbox() -> Double {
         return self.numberValue
     }
 }
-
-internal class JSONFloat: JSONObject {
-    let numberValue: Float
-    
-    override var value: Any? {
-        get {
-            return numberValue as Float
-        }
-        set {
-            
-        }
-    }
-    
-    init(value: String) {
-        self.numberValue = Float(value)!
-        super.init()
-    }
-    
-    func unbox() -> Float {
-        return self.numberValue
-    }
-}
+//
+//internal class JSONFloat: JSONObject {
+//    let numberValue: Float
+//
+//    override var value: Any? {
+//        get {
+//            return numberValue as Float
+//        }
+//        set {
+//
+//        }
+//    }
+//
+//    init(value: String) {
+//        self.numberValue = Float(value)!
+//        super.init()
+//    }
+//
+//    func unbox() -> Float {
+//        return self.numberValue
+//    }
+//}
 
 internal class JSONNumber: JSONObject {
-    
+
     let numberValue: Int
     override var value: Any? {
         get {
             return self.numberValue as Int
         }
-        
+
         set (input) {
 //            self.value = input
         }
     }
-    
+
     override var description: String {
         get {
             return "JSONNumber: \(value as! Int)"
         }
     }
-    
-    init(value: String) {
-        self.numberValue = Int(value)!
+
+    init?(value: String) {
+        guard let number = Int(value) else {
+            return nil
+        }
+        self.numberValue = number
         super.init()
     }
-    
+
     func unbox() -> Int {
         return self.numberValue
     }
@@ -377,15 +383,17 @@ open class JSONParser: CustomStringConvertible {
                 } else {
                     // it is a number
                     let v = t.value!
-                    if v.contains(".") {
-                        let result = JSONDouble(value: v)
+                    if v.contains("."),let result = JSONDouble(value: v) {
+                        try next()
+                        return result
+                    }else if let result = JSONNumber(value: v){
                         try next()
                         return result
                     } else {
-                        let result = JSONNumber(value: v)
+                        let result = JSONString(value: v)
                         try next()
                         return result
-                    } //consume the alphanumeric token for the number
+                    } 
                 }
             default:
                 throw ParsingError.UnknownToken(token: t)

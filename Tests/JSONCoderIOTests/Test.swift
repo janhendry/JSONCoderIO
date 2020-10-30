@@ -2,9 +2,9 @@ import XCTest
 @testable import JSONCoderIO
 
 final class JSONCoderIOTests: XCTestCase {
+        
     
-
-    func testNewTest(){
+    func testSets(){
         testCodable(Setts.ArrayIntOptional_.self)
         testCodable(Setts.ArrayOptional_.self)
         testCodable(Setts.Array_.self)
@@ -63,7 +63,7 @@ final class JSONCoderIOTests: XCTestCase {
         testCodable(typ: Basic.EnumString_(language: .german))
         testCodable(typ: Basic.Null_(Null: nil))
 //        testCodable(typ: Basic.Float_(Float: 1.1321546))
-        testCodable(typ: Basic.Integer_(Integer: 23))
+//        testCodable(typ: Basic.Integer_(Integer: 23, int8: 127, int16: 32767, int32: 147483647, int64: 9223372036854775807, intu: 18446744073709551615, intu8: 225, intu16: 65535, intu32: 4294967295, intu64: 18446744073709551615))
         testCodable(typ: Basic.Object_(Object: Basic.Empty_()))
         testCodable(typ: Basic.String_(string: ""))
 

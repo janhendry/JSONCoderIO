@@ -90,27 +90,52 @@ enum Basic {
     }
     struct Integer_:Codable, BundelPath {
         let Integer: Int
+        let int8 : Int8
+        let int16 : Int16
+        let int32 : Int32
+        let int64 : Int64
+        let intu : UInt
+        let intu8 : UInt8
+        let intu16 : UInt16
+        let intu32 : UInt32
+        let intu64 : UInt64
         
         static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Integer","json")
         }
-    }
-    struct Null_:Codable, BundelPath {
-        let Null: Int?
-        
-        static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/basic","Null","json")
+
+        enum CodingKeys: String, CodingKey {
+            case Integer
+            case int16
+            case int32
+            case int64
+            case int8
+            case intu
+            case intu16
+            case intu32
+            case intu64
+            case intu8
         }
     }
     
+    struct Null_:Codable, BundelPath {
+         let Null: Int?
+         
+         static func path() -> (subDic:String,file:String,ext:String) {
+             return ("JSONTestData/basic","Null","json")
+         }
+    }
     
     
     struct Object_:Codable, BundelPath {
         let Object: Empty_
         
+        
         static func path() -> (subDic:String,file:String,ext:String) {
             return ("JSONTestData/basic","Object","json")
         }
+        
+        
     }
     
     struct String_: Codable, BundelPath{

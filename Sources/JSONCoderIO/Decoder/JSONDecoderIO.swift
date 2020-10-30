@@ -32,7 +32,7 @@ public class JSONDecoderIO: Decoder {
     
     init(_ element: Any, codingPath: [CodingKey] = []) {
         self.element = element
-        self.codingPath.append(contentsOf: codingPath)
+        self.codingPath = codingPath
     }
     
     public func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> {

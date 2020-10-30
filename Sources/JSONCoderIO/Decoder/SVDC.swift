@@ -37,8 +37,55 @@ extension JSONDecoderIO{
             return try decodeValue(type)
         }
         
-        func decode(_ type: Float16.Type){
-            
+        func decode(_ type: Int8.Type) throws -> Int8 {
+            let int = try decode(Int.self)
+            return Int8(int)
+        }
+        
+        func decode(_ type: Int16.Type) throws -> Int16 {
+            let int = try decode(Int.self)
+            return Int16(int)
+        }
+        
+        func decode(_ type: Int32.Type) throws -> Int32 {
+            let int = try decode(Int.self)
+            return Int32(int)
+        }
+        
+        func decode(_ type: Int64.Type) throws -> Int64 {
+            let int = try decode(Int.self)
+            return Int64(int)
+        }
+        
+        func decode(_ type: UInt.Type) throws -> UInt {
+            let int = try decode(String.self)
+            if let uInt = UInt(int){
+                return uInt
+            }
+            throw DecodingError.invadlideType(codingPath.path())
+        }
+        
+        func decode(_ type: UInt8.Type) throws -> UInt8 {
+            let int = try decode(Int.self)
+            return UInt8(int)
+        }
+        
+        func decode(_ type: UInt16.Type) throws -> UInt16 {
+            let int = try decode(Int.self)
+            return UInt16(int)
+        }
+        
+        func decode(_ type: UInt32.Type) throws -> UInt32 {
+            let int = try decode(Int.self)
+            return UInt32(int)
+        }
+        
+        func decode(_ type: UInt64.Type) throws -> UInt64 {
+            let int = try decodeValue(String.self)
+            if let uInt64 = UInt64(int){
+                return uInt64
+            }
+            throw DecodingError.invadlideType(codingPath.path())
         }
         
         func decode(_ type: Double.Type) throws -> Double {
