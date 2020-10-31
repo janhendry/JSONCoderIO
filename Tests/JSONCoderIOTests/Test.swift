@@ -4,6 +4,10 @@ import XCTest
 final class JSONCoderIOTests: XCTestCase {
         
     
+    func testNested(){
+        testCodable(Nested.Foo.self)
+    }
+    
     func testSets(){
         testCodable(Setts.ArrayIntOptional_.self)
         testCodable(Setts.ArrayOptional_.self)

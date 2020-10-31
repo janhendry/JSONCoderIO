@@ -103,8 +103,6 @@ class EncoderData {
         throw EncoderStorageError.firstObjectNoDictionary
     }
     
-    
-    
     private func decodeLink(_ value: Any) throws -> Any {
         switch value{
             case let object as DataDic:
@@ -202,68 +200,5 @@ class EncoderData {
             default:
                 return "\(value)"
         }
-        
-    }
-    
-
-}
-
-protocol OptionalProtocol {
-    func isSome() -> Bool
-    func unwrap() -> Any
-}
-
-extension Optional : OptionalProtocol {
-    func isSome() -> Bool {
-        switch self {
-        case .none: return false
-        case .some: return true
-        }
-    }
-
-    func unwrap() -> Any {
-        switch self {
-        case .none: preconditionFailure("trying to unwrap nil")
-        case .some(let unwrapped): return unwrapped
-        }
-    }
-    func unwrap<T>(type:T) -> T {
-        switch self {
-        case .none: preconditionFailure("trying to unwrap nil")
-        case .some(let unwrapped): return unwrapped as! T
-        }
     }
 }
-
-
-//class EncoderData1 {
-//    
-//    struct JsonObject{
-//        var dic: [(String,Any)] = []
-//        
-//        mutating func add(_ key: [String] ,_ value:Any) -> Bool{
-//            dic.append((key,value))
-//        }
-//    }
-//    
-//        fileprivate mutating func merge(with other: JSON, typecheck: Bool) throws {
-//if type == other.type {
-//    switch type {
-//    case .dictionary:
-//        for (key, _) in other {
-//            try self[key].merge(with: other[key], typecheck: false)
-//        }
-//    case .array:
-//        self = JSON(arrayValue + other.arrayValue)
-//    default:
-//        self = other
-//    }
-//} else {
-//    if typecheck {
-//        throw SwiftyJSONError.wrongType
-//    } else {
-//        self = other
-//    }
-//}
-//}
-//}

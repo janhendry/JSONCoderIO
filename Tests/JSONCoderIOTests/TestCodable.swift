@@ -104,16 +104,4 @@ extension JSONCoderIOTests {
         XCTAssertEqual(encodeString,encodeStringIO, "Encoder != EncoderIO : \(path)")
         
     }
-    
-
-//    func testSingle(){
-        //        let decoder1 = try! JSONDecoderIO(stringD)
-        //        let t = try! T(from: decoder1)
-        //        let encoder1 = JSONEncoderIO()
-        //        try! t.encode(to: encoder1)
-        //        let encoder1S = try! encoder1.getJson()
-        //
-        //
-        //        XCTAssertEqual(stringShortD,encoder1S, "Codable Fail: Input != Output: \(path)")
-//    }
 }

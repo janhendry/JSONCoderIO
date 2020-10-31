@@ -1,0 +1,10 @@
+{"Response": {
+    "Bar": true,
+    "Baz": "Hello, World!",
+    "Friends": {
+        "Best": "Nic",
+        "FunnyGuy": "Gabe",
+        "FavoriteWeirdo": "Jer"
+        }
+    }
+}

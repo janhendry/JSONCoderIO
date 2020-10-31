@@ -89,7 +89,25 @@ extension JSONEncoderIO{
             try value.encode(to: JSONEncoderIO(codingPath.appending(key: key), &data))
         }
         
-        
+        mutating func nestedContainer<NestedKey>(keyedBy keyType: NestedKey.Type, forKey key: Key) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
+            try! data.addLink(codingPath.path(), key.stringValue)
+            return KeyedEncodingContainer(JSONEncoderIO.KEC(&data, codingPath.appending(key: key)))
+            
+        }
+
+        mutating func nestedUnkeyedContainer(forKey key: Key) -> UnkeyedEncodingContainer {
+            try! data.addLink(codingPath.path(), key.stringValue)
+            return JSONEncoderIO.UEC(&data, codingPath.appending(key: key))
+            
+        }
+
+        mutating func superEncoder() -> Encoder {
+            return superEncoder(forKey: Key(stringValue: "super")!)
+        }
+
+        mutating func superEncoder(forKey key: Key) -> Encoder {
+            return JSONEncoderIO(codingPath.appending(key: key), &data)
+        }
     }
 }
 

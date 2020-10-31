@@ -5,7 +5,6 @@
 //
 extension JSONDecoderIO{
     struct KDC<Key: CodingKey>: KeyedDecodingContainerProtocol {
-        
         let isDebug = false
         var codingPath: [CodingKey]
         var allKeys: [Key]
@@ -136,6 +135,39 @@ extension JSONDecoderIO{
                 return true
             }
             return false
+        }
+        
+        func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type, forKey key: Key) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
+            guard let object = element[key.stringValue] else {
+                throw DecodingError.keyNotFound(codingPath.appending(key: key).path())
+            }
+            
+            guard let dic = object as? [String:Any] else {
+                throw DecodingError.invadlideKeyedContainer(codingPath.path())
+            }
+            return KeyedDecodingContainer(JSONDecoderIO.KDC(dic, codingPath.appending(key: key)))
+            
+        }
+        
+        func nestedUnkeyedContainer(forKey key: Key) throws -> UnkeyedDecodingContainer {
+            guard let object = element[key.stringValue] else {
+                throw DecodingError.keyNotFound(codingPath.appending(key: key).path())
+            }
+            guard let array = object as? [Any] else {
+                throw DecodingError.invadlideUnkedContainer(codingPath.path())
+            }
+            return try JSONDecoderIO.UDC(array, codingPath.appending(key: key))
+        }
+        
+        func superDecoder() throws -> Decoder {
+            return try superDecoder(forKey:  Key(stringValue: "super")!)
+        }
+        
+        func superDecoder(forKey key: Key) throws -> Decoder {
+            guard let object = element[key.stringValue] else {
+                throw DecodingError.keyNotFound(codingPath.appending(key: key).path())
+            }
+            return JSONDecoderIO(object, codingPath: codingPath)
         }
     }
 }

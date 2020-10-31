@@ -95,25 +95,16 @@ extension JSONDecoderIO{
     
 }
 
-
-extension Array where Element == CodingKey {
-    func path() -> String {
-        self.map{$0.stringValue}.joined(separator: ".")
+struct JSONKey:CodingKey{
+    var stringValue: String
+    var intValue: Int?
+    
+    init?(stringValue: String) {
+        self.stringValue = stringValue
     }
-    func path() -> [String] {
-        self.map{$0.stringValue}
+    init(intValue: Int) {
+        self.intValue = intValue
+        self.stringValue = String(intValue)
     }
-    func appending(key:CodingKey) -> [CodingKey] {
-        var keys = map{$0}
-        keys.append(key)
-        return keys
-    }
+    
 }
-
-extension Array where Element == String {
-    func path() -> String {
-        self.map{$0}.joined(separator: ".")
-    }
-}
-
-

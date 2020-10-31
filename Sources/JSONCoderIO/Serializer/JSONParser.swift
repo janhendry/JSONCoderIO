@@ -61,9 +61,6 @@ internal class JSONObject: CustomStringConvertible {
             case is JSONDouble:
                 let s = v as! JSONDouble
                 d[k.unbox()] = s.unbox() as Double
-//            case is JSONFloat:
-//                let s = v as! JSONFloat
-//                d[k.unbox()] = s.unbox() as Float
             case is JSONArray:
                 let s = v as! JSONArray
                 d[k.unbox()] = s.unbox() as [Any]
@@ -124,9 +121,6 @@ internal class JSONArray: JSONObject {
             case is JSONDouble:
                 let s = x as! JSONDouble
                 a.append(s.unbox() as Double)
-//            case is JSONFloat:
-//                let s = x as! JSONFloat
-//                a.append(s.unbox() as Float)
             case is JSONArray:
                 let s = x as! JSONArray
                 a.append(s.unbox() as [Any])
@@ -244,28 +238,6 @@ internal class JSONDouble: JSONObject {
         return self.numberValue
     }
 }
-//
-//internal class JSONFloat: JSONObject {
-//    let numberValue: Float
-//
-//    override var value: Any? {
-//        get {
-//            return numberValue as Float
-//        }
-//        set {
-//
-//        }
-//    }
-//
-//    init(value: String) {
-//        self.numberValue = Float(value)!
-//        super.init()
-//    }
-//
-//    func unbox() -> Float {
-//        return self.numberValue
-//    }
-//}
 
 internal class JSONNumber: JSONObject {
 
@@ -335,7 +307,6 @@ open class JSONParser: CustomStringConvertible {
     
     private func next() throws {
         self.index += 1
-        //print("Token: \(index)/\(tokens.count)")
         if index > tokens.count {
             throw ParsingError.ExpectedClosingBrace
         }

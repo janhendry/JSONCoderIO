@@ -21,7 +21,6 @@ extension JSONEncoderIO{
         }
         
         mutating private func addValue(_ value: Any) throws {
-            try data.addArray(codingPath.path())
             count += 1
             try data.addArrayItem(codingPath.path(), value)
         }
@@ -32,24 +31,29 @@ extension JSONEncoderIO{
         
         
         mutating func encode<T>(_ value: T) throws where T : Encodable {
-            let path = codingPath.appending(key: UKCKey(intValue: count))
+            let path = codingPath.appending(key: JSONKey(intValue: count))
             try data.addLink(codingPath.path(),String(count))
             count += 1
             try value.encode(to: JSONEncoderIO(path, &data))
         }
         
-        
-        struct UKCKey:CodingKey{
-            var stringValue: String
-            var intValue: Int?
+        mutating func nestedContainer<NestedKey>(keyedBy keyType: NestedKey.Type) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
+            try! data.addLink(codingPath.path(),String(count))
+            return KeyedEncodingContainer(JSONEncoderIO.KEC(&data, codingPath.appending(key: JSONKey(intValue: count))))
             
-            init(stringValue: String) {
-                self.stringValue = stringValue
-            }
-            init(intValue: Int) {
-                self.intValue = intValue
-                self.stringValue = String(intValue)
-            }
         }
+        
+        mutating func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
+            try! data.addLink(codingPath.path(),String(count))
+            return UEC(&data, codingPath.appending(key: JSONKey(intValue: count)))
+        }
+        
+        mutating func superEncoder() -> Encoder {
+            try! data.addLink(codingPath.path(),String(count))
+            return JSONEncoderIO(codingPath.appending(key: JSONKey(intValue: count)), &data)
+        }
+        
     }
 }
+
+
