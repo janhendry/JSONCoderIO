@@ -3,7 +3,6 @@
 //
 //  Created by Jan Anstipp on 13.10.20.
 //
-import Foundation
 
 extension JSONDecoderIO{
     struct SVDC: SingleValueDecodingContainer {
