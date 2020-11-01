@@ -7,10 +7,9 @@
 
 enum DecodingError:Error{
     case keyNotFound(String)
-    case invadlideTye(String)
+    case invadlideType(String)
     case invadlideKeyedContainer(String)
     case invadlideUnkedContainer(String)
-    
     case arrayIndexFail(String)
     case valueTypinvalide(String)
     case parsingFail(String)
@@ -24,7 +23,7 @@ public class JSONDecoderIO: Decoder {
     public init(_ string: String) throws {
         do{
             let parser = try JSONParser(text: string).parse()
-            element = JSONAny.decode(data: parser)!
+            element = parser.unbox()
         }catch{
             
             throw DecodingError.parsingFail("parsingFail")
@@ -33,10 +32,11 @@ public class JSONDecoderIO: Decoder {
     
     init(_ element: Any, codingPath: [CodingKey] = []) {
         self.element = element
-        self.codingPath.append(contentsOf: codingPath)
+        self.codingPath = codingPath
     }
     
     public func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> {
+        
         guard let dic = element as? [String:Any] else {
             throw DecodingError.invadlideKeyedContainer(codingPath.path())
         }
@@ -95,41 +95,16 @@ extension JSONDecoderIO{
     
 }
 
-
-extension Array where Element == CodingKey {
-    func path() -> String {
-        self.map{$0.stringValue}.joined(separator: ".")
+struct JSONKey:CodingKey{
+    var stringValue: String
+    var intValue: Int?
+    
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+    }
+    init(intValue: Int) {
+        self.intValue = intValue
+        self.stringValue = String(intValue)
     }
     
-    func appending(key:CodingKey) -> [CodingKey] {
-        var keys = map{$0}
-        keys.append(key)
-        return keys
-    }
 }
-
-extension Array where Element == String {
-    func path() -> String {
-        self.map{$0}.joined(separator: ".")
-    }
-    
-    func appending(key:CodingKey) -> [String] {
-        var keys = map{$0}
-        keys.append(key.stringValue)
-        return keys
-    }
-    
-    func appending(key:String) -> [String] {
-        var keys = map{$0}
-        keys.append(key)
-        return keys
-    }
-    
-    func appending(count:Int) -> [String] {
-        var keys = map{$0}
-        keys.append(String(count))
-        return keys
-    }
-}
-
-

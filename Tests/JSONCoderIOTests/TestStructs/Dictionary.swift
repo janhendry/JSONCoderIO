@@ -2,61 +2,62 @@
 //  File.swift
 //  
 //
-//  Created by Jan Anstipp on 21.10.20.
+//  Created by Jan Anstipp on 25.10.20.
 //
 
-enum Arrays{
+
+enum Dictionarys{
     
     struct Array_:Codable, BundelPath {
-        let array: [[Int]]
-        
+        let array: [[String:Int]]
+
         enum CodingKeys: String, CodingKey {
-               case array = "Array"
+            case array = "Array"
         }
-        
+
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Array","json")
+            return ("JSONTestData/Dictionary","Array","json")
         }
     }
     
     struct Boolean_:Codable, BundelPath {
-        let boolean: [Bool]
+        let boolean: [String:Bool]
         
         enum CodingKeys: String, CodingKey {
             case boolean = "Boolean"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Boolean","json")
+            return ("JSONTestData/Dictionary","Boolean","json")
         }
     }
     
     struct Double_:Codable, BundelPath {
-        let double: [Double]
-
+        let double: [String:Double]
+        
         enum CodingKeys: String, CodingKey {
             case double = "Double"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Double","json")
+            return ("JSONTestData/Dictionary","Double","json")
         }
     }
     
     struct Empty_:Codable, BundelPath {
-        let empty: [Int]
+        let empty: [String:Int]
         
         enum CodingKeys: String, CodingKey {
             case empty = "Empty"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Empty","json")
+            return ("JSONTestData/Dictionary","Empty","json")
         }
     }
     
-    struct EnumInt_: Codable, BundelPath{
-        var language: [Language]
+    struct Enum_: Codable, BundelPath{
+        var language: [String:Language]
         
         enum Language: Int, Codable {
             case german = 0
@@ -66,104 +67,98 @@ enum Arrays{
         }
         
         enum CodingKeys: String, CodingKey {
-            case language = "Language"
+            case language = "Enum"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","EnumInt","json")
+            return ("JSONTestData/Dictionary","Enum","json")
         }
     }
-    
-    struct EnumString_: Codable, BundelPath{
-        var language: [Language]
-        
-        enum Language: String, Codable {
-            case german = "German"
-            case english = "English"
-            case spanish = "Spanish"
-            case french = "French"
-        }
-        
-        enum CodingKeys: String, CodingKey {
-            case language = "Language"
-        }
-        
-        static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","EnumString","json")
-        }
-    }
-    
+
     struct Float_:Codable, BundelPath {
-        let float: [Float]
+        let float: [String:Float]
         
         enum CodingKeys: String, CodingKey {
             case float = "Float"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Float","json")
+            return ("JSONTestData/Dictionary","Float","json")
         }
     }
-
+    
     struct Integer_: Codable, BundelPath {
-        let integer: [Int]
+        let integer: [String:Int]
         
         enum CodingKeys: String, CodingKey {
             case integer = "Integer"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Integer","json")
+            return ("JSONTestData/Dictionary","Integer","json")
+        }
+    }
+    
+    struct IntegerArray_:Codable, BundelPath {
+        let array: [String:[Int]]
+        
+        enum CodingKeys: String, CodingKey {
+            case array = "IntegerArray"
+        }
+        
+        static func path() -> (subDic:String,file:String,ext:String) {
+            return ("JSONTestData/Dictionary","IntegerArray","json")
         }
     }
     
     struct Null_: Codable, BundelPath {
-        let null: [Int?]
-
+        let null: [String:Int?]
+        
         enum CodingKeys: String, CodingKey {
             case null = "Null"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Null","json")
+            return ("JSONTestData/Dictionary","Null","json")
         }
     }
     
     struct Object_: Codable, BundelPath {
-   
-        let object: [ObjectElement_]
 
+        let object: [ObjectElement_]
+        
         enum CodingKeys: String, CodingKey {
             case object = "Object"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","Object","json")
+            return ("JSONTestData/Dictionary","Object","json")
         }
     }
-
+    
     // MARK: - Array
-    struct ObjectElement_: Codable, Equatable {
+    struct ObjectElement_: Codable,Equatable {
     }
-
+    
     
     
     struct String_: Codable, BundelPath {
-        let string: [String]
+        let string: [String:String]
         
         enum CodingKeys: String, CodingKey {
             case string = "String"
         }
         
         static func path() -> (subDic:String,file:String,ext:String) {
-            return ("JSONTestData/Array","String","json")
+            return ("JSONTestData/Dictionary","String","json")
         }
     }
-
+    
     struct Object2_: Codable, BundelPath {
+
         
         let object2: [Object2Element_]
-
+        
         enum CodingKeys: String, CodingKey {
             case object2 = "Object2"
         }
@@ -173,20 +168,20 @@ enum Arrays{
         }
         
     }
-
+    
     // MARK: - Object2Element
     struct Object2Element_: Codable,Equatable {
         let boolean: Bool
-        let number: Int
         let null: String?
         let string: String
+        let number: Int
         
         enum CodingKeys: String, CodingKey {
             case boolean = "Boolean"
-            case number = "Number"
             case null = "Null"
             case string = "String"
-
+            case number = "Number"
         }
     }
 }
+

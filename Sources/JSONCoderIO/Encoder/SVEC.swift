@@ -1,6 +1,5 @@
 //
 //  SEC.swift
-//  SwiftIORest_App
 //
 //  Created by Jan Anstipp on 18.10.20.
 //
@@ -8,18 +7,17 @@
 extension JSONEncoderIO{
     
     struct SVEC:  SingleValueEncodingContainer {
-        var codingPath: [CodingKey] = []
-        var codingPathS: [String] = []
+        var codingPath: [CodingKey]
         var data: EncoderData
         let isDebug = false
         
-        init(_ data: inout EncoderData ,_ codingPath: [String]) {
+        init(_ data: inout EncoderData ,_ codingPath: [CodingKey]) {
             self.data = data
-            self.codingPathS = codingPath
+            self.codingPath = codingPath
         }
         
         private func addValue(_ value: Any) throws {
-            try data.addItem(codingPathS,value)
+            try data.addItem(codingPath.path(),value)
         }
         
         mutating func encodeNil() throws {
@@ -83,7 +81,7 @@ extension JSONEncoderIO{
         }
         
         mutating func encode<T>(_ value: T) throws where T : Encodable {
-            try value.encode(to: JSONEncoderIO(codingPathS, &data))
+            try value.encode(to: JSONEncoderIO(codingPath, &data))
         }
     }
 }

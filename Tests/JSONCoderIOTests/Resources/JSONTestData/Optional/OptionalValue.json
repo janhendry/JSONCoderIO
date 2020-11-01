@@ -1,0 +1,18 @@
+{
+  "Array" : [],
+  "Boolean" : false,
+  "Double" : 0.12345678,
+  "Enum" : 0,
+  "Integer" : 0,
+  "Object" : {},
+  "Object2" : {
+    "String" : "object2",
+    "Integer" : 0,
+    "Boolean" : false,
+    "Null" : null,
+    "Array" : [
+      0
+    ]
+  },
+  "String" : "string"
+}

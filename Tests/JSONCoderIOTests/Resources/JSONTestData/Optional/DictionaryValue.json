@@ -1,0 +1,74 @@
+{
+  "Array" : {
+    "Array" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Array_0" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Array_1" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Array_2" : [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "Array_2" : {
+    "Array" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Array_0" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Array_1" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "Array_2" : [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "Dictionary" : {
+    "Object" : {
+      "Number_0" : 0,
+      "Number_1" : 1,
+      "Number_2" : 2,
+      "Number_3" : 3
+    },
+    "Object_1" : {
+      "Number" : 0,
+      "Number_0" : 1,
+      "Number_1" : 2,
+      "Number_2" : 3
+    }
+  },
+  "Integer" : {
+    "Number" : 0,
+    "Number_0" : 1,
+    "Number_1" : 2,
+    "Number_2" : 3
+  }
+}

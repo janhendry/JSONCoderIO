@@ -25,8 +25,7 @@ let package = Package(
         .testTarget(
             name: "JSONCoderIOTests",
             dependencies: ["JSONCoderIO"],
-            resources: [ .copy("Resources/JSONTestData"),
-                         .process("Resources/single/String.json")]
+            resources: [ .copy("Resources/JSONTestData"), ]
             ),
     ]
 )

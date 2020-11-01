@@ -45,7 +45,7 @@ internal class JSONObject: CustomStringConvertible {
         }
     }
     func unbox() -> Dictionary<String, Any> {
-        var d = Dictionary<String,Any>()
+        var d = Dictionary<String,Any?>()
         var i = 0
         
         while i < self.values.count && i < self.keys.count {
@@ -61,9 +61,6 @@ internal class JSONObject: CustomStringConvertible {
             case is JSONDouble:
                 let s = v as! JSONDouble
                 d[k.unbox()] = s.unbox() as Double
-            case is JSONFloat:
-                let s = v as! JSONFloat
-                d[k.unbox()] = s.unbox() as Float
             case is JSONArray:
                 let s = v as! JSONArray
                 d[k.unbox()] = s.unbox() as [Any]
@@ -71,15 +68,13 @@ internal class JSONObject: CustomStringConvertible {
                 let s = v as! JSONBool
                 d[k.unbox()] = s.unbox() as Bool
             case is JSONNull:
-                d[k.unbox()] = nil
+                d.updateValue(nil,forKey: k.unbox())
             default:
-                d[k.unbox()] = v!.unbox() as Dictionary<String,Any>
+                d[k.unbox()] = v!.unbox() as Dictionary<String,Any?>
             }
-            
             i += 1
         }
-        
-        return d
+        return d as Dictionary<String, Any>
     }
 }
 
@@ -114,7 +109,7 @@ internal class JSONArray: JSONObject {
     }
     
     func unbox() -> [Any] {
-        var a = [Any]()
+        var a = [Any?]()
         for x in self.elements {
             switch (x.self) {
             case is JSONString:
@@ -126,9 +121,6 @@ internal class JSONArray: JSONObject {
             case is JSONDouble:
                 let s = x as! JSONDouble
                 a.append(s.unbox() as Double)
-            case is JSONFloat:
-                let s = x as! JSONFloat
-                a.append(s.unbox() as Float)
             case is JSONArray:
                 let s = x as! JSONArray
                 a.append(s.unbox() as [Any])
@@ -136,12 +128,12 @@ internal class JSONArray: JSONObject {
                 let s = x as! JSONBool
                 a.append(s.unbox() as Bool)
             case is JSONNull:
-                continue
+                a.append(nil)
             default:
                 a.append(x.unbox())
             }
         }
-        return a
+        return a as [Any]
     }
 }
 
@@ -234,9 +226,12 @@ internal class JSONDouble: JSONObject {
         }
     }
 
-    init(value: String) {
-        self.numberValue = Double(value)!
-        super.init()
+    init?(value: String) {
+        if let double = Double(value){
+            self.numberValue = double
+            super.init()
+        }
+        return nil
     }
 
     func unbox() -> Double {
@@ -244,52 +239,33 @@ internal class JSONDouble: JSONObject {
     }
 }
 
-internal class JSONFloat: JSONObject {
-    let numberValue: Float
-    
-    override var value: Any? {
-        get {
-            return numberValue as Float
-        }
-        set {
-            
-        }
-    }
-    
-    init(value: String) {
-        self.numberValue = Float(value)!
-        super.init()
-    }
-    
-    func unbox() -> Float {
-        return self.numberValue
-    }
-}
-
 internal class JSONNumber: JSONObject {
-    
+
     let numberValue: Int
     override var value: Any? {
         get {
             return self.numberValue as Int
         }
-        
+
         set (input) {
 //            self.value = input
         }
     }
-    
+
     override var description: String {
         get {
             return "JSONNumber: \(value as! Int)"
         }
     }
-    
-    init(value: String) {
-        self.numberValue = Int(value)!
+
+    init?(value: String) {
+        guard let number = Int(value) else {
+            return nil
+        }
+        self.numberValue = number
         super.init()
     }
-    
+
     func unbox() -> Int {
         return self.numberValue
     }
@@ -331,7 +307,6 @@ open class JSONParser: CustomStringConvertible {
     
     private func next() throws {
         self.index += 1
-        //print("Token: \(index)/\(tokens.count)")
         if index > tokens.count {
             throw ParsingError.ExpectedClosingBrace
         }
@@ -379,15 +354,17 @@ open class JSONParser: CustomStringConvertible {
                 } else {
                     // it is a number
                     let v = t.value!
-                    if v.contains(".") {
-                        let result = JSONDouble(value: v)
+                    if v.contains("."),let result = JSONDouble(value: v) {
+                        try next()
+                        return result
+                    }else if let result = JSONNumber(value: v){
                         try next()
                         return result
                     } else {
-                        let result = JSONNumber(value: v)
+                        let result = JSONString(value: v)
                         try next()
                         return result
-                    } //consume the alphanumeric token for the number
+                    } 
                 }
             default:
                 throw ParsingError.UnknownToken(token: t)
