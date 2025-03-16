@@ -1,15 +1,14 @@
 # JSONCoderIO
 
-JSONCopderIO is a implementation of [JSONDecoder](https://developer.apple.com/documentation/foundation/jsondecoder) and [JSONEncoder](https://developer.apple.com/documentation/foundation/jsonencoder).  Is implemented natively in Swift and support the [Codable](https://developer.apple.com/documentation/swift/codable) Protocol. I write this Libary for the SwiftIO Board from [MadMachineIO](https://www.madmachine.io). Big thanks for this borad! 
+JSONCopderIO is a implementation of [JSONDecoder](https://developer.apple.com/documentation/foundation/jsondecoder) and [JSONEncoder](https://developer.apple.com/documentation/foundation/jsonencoder).  Is implemented natively in Swift and support the [Codable](https://developer.apple.com/documentation/swift/codable) Protocol. I write this Libary for the SwiftIO Board from [MadMachineIO](https://www.madmachine.io). Big thanks for this borad!
 
+> **Zero dependencies:** - this library is implemented entirely in Swift and does not rely on any additional libraries.
 
-## Instalation 
+## Instalation
 
-### MadMachine IDE
+### Swift Package Manager
 
-[Here](https://resources.madmachine.io/tutorial/how-to-use-a-libraries) you can find a good tutorial that explains how to install a library in MadMachien IDE.
-
-
+[Here](https://docs.madmachine.io/overview/advanced/use-library) you can find a good tutorial that explains how to install a library.
 
 ## quicktype
 
@@ -18,7 +17,7 @@ JSONCopderIO is a implementation of [JSONDecoder](https://developer.apple.com/do
 
 ## Example
 
-```
+```swift
 import JSONCoderIO
 
 var json = """
@@ -61,8 +60,6 @@ print(jsonString)
 
 ```
 
-
-
 ## Overview
 
 An overview of what has been tested with this library. If you have found errors or formats that I need to test. Let me know.
@@ -83,10 +80,6 @@ An overview of what has been tested with this library. If you have found errors 
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Set`](https://developer.apple.com/documentation/swift/set) | true         | true         |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`String`](https://developer.apple.com/documentation/swift/string) | true      | true      |
 
-
-
-
-
 Test Missing:
 | Libary                                                       | Type                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -98,4 +91,3 @@ Test Missing:
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`PartialRangeThrough`](https://developer.apple.com/documentation/swift/partialrangethrough) |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`PartialRangeUpTo`](https://developer.apple.com/documentation/swift/partialrangeupto) |
 | [`Swift Standard Library`](https://developer.apple.com/documentation/swift/swift_standard_library) | [`Range`](https://developer.apple.com/documentation/swift/range) |
-
